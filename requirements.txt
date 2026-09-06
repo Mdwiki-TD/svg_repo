@@ -1,26 +1,26 @@
+
 asgiref
+colorlog
 cryptography
 Flask
+Flask-Admin
+Flask-Babel
 flask-limiter
+Flask-Migrate>=4.0.0
+Flask-SQLAlchemy>=3.1.0
 Flask-WTF
+Flask-wtf
 gunicorn
 lxml
-# lxml-stubs # For type stubs
 mwclient
 mwoauth
 pymysql
 python-dotenv
 requests
+sqlalchemy
 tqdm
 uvicorn
 wikitextparser>=2.0.0
-colorlog
-# CopySVGTranslation>=0.2.6
-git+https://github.com/MrIbrahem/CopySVGTranslation.git@main
-sqlalchemy
-Flask-SQLAlchemy>=3.1.0
-Flask-Migrate>=4.0.0
-Flask-Babel
-Flask-Admin
 WTForms
-Flask-wtf
+
+git+https://github.com/MrIbrahem/CopySVGTranslation.git@main
