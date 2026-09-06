@@ -13,7 +13,7 @@ python-dotenv
 requests
 tqdm
 uvicorn
-wikitextparser
+wikitextparser>=2.0.0
 colorlog
 # CopySVGTranslation>=0.2.6
 git+https://github.com/MrIbrahem/CopySVGTranslation.git@main
