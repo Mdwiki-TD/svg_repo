@@ -2,6 +2,8 @@
 Logging configuration with colored output.
 """
 
+from __future__ import annotations
+
 import logging
 import os
 import sys

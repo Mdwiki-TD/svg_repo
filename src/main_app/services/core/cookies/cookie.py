@@ -6,13 +6,15 @@ import logging
 
 from itsdangerous import BadSignature, BadTimeSignature, URLSafeTimedSerializer
 
-from ....config import settings
+from ....config import app_settings
 
 logger = logging.getLogger(__name__)
 
-_serializer = URLSafeTimedSerializer(settings.security.secret_key, salt=f"{settings.security.salt}-uid")
+_serializer = URLSafeTimedSerializer(app_settings.security.secret_key, salt=f"{app_settings.security.salt}-uid")
 
-_state_serializer = URLSafeTimedSerializer(settings.security.secret_key, salt=f"{settings.security.salt}-oauth-state")
+_state_serializer = URLSafeTimedSerializer(
+    app_settings.security.secret_key, salt=f"{app_settings.security.salt}-oauth-state"
+)
 
 
 def sign_user_id(user_id: int) -> str:
@@ -25,7 +27,7 @@ def extract_user_id(token: str) -> int | None:
     """Validate and decode a signed user id token."""
     logger.debug("Extracting user_id from token")
     try:
-        data = _serializer.loads(token, max_age=settings.cookie.max_age)
+        data = _serializer.loads(token, max_age=app_settings.cookie.max_age)
     except (BadSignature, BadTimeSignature):
         logger.exception("Failed to extract user_id: invalid or expired token")
         return None
@@ -48,7 +50,7 @@ def verify_state_token(token: str) -> str | None:
     """Validate a signed OAuth state token and return the embedded nonce."""
     logger.debug("Verifying state token")
     try:
-        data = _state_serializer.loads(token, max_age=settings.cookie.max_age)
+        data = _state_serializer.loads(token, max_age=app_settings.cookie.max_age)
     except (BadSignature, BadTimeSignature):
         logger.exception("Failed to verify state token: invalid or expired")
         return None

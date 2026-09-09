@@ -13,7 +13,7 @@ from flask import (
 )
 from flask.wrappers import Response
 
-from ...config import settings
+from ...config import app_settings
 from ..utils.compare import analyze_file
 from ..utils.explorer_utils import (
     get_files,
@@ -25,11 +25,11 @@ logger = logging.getLogger(__name__)
 
 
 def load_thumb_path() -> Path:
-    return Path(settings.paths.svg_data_thumb)
+    return Path(app_settings.paths.svg_data_thumb)
 
 
 def load_svg_data_path() -> Path:
-    return Path(settings.paths.svg_data)
+    return Path(app_settings.paths.svg_data)
 
 
 class ExplorerRoutes:

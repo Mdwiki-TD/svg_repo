@@ -1,5 +1,7 @@
 """Admin blueprint package."""
 
+from __future__ import annotations
+
 from typing import Any
 
 from flask import Flask, abort, redirect, request, url_for

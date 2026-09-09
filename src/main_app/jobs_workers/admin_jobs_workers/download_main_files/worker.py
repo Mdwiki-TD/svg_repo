@@ -12,7 +12,7 @@ import requests
 
 from ....api_services import FilesService, create_commons_session
 from ....api_services.files_service import DownloadAndSaveData
-from ....config import settings
+from ....config import app_settings
 from ....database.models import TemplateRecord
 from ....database.services import TemplateService
 from ...base_worker import BaseObjectsJobWorker
@@ -36,7 +36,7 @@ def generate_main_files_zip(main_files_zip_name) -> Path:
         FileNotFoundError: If main_files_path directory does not exist
         RuntimeError: If no files are found to zip
     """
-    main_files_path = Path(settings.paths.main_files_path)
+    main_files_path = Path(app_settings.paths.main_files_path)
 
     if not main_files_path.exists():
         raise FileNotFoundError(f"Main files directory does not exist: {main_files_path}")
@@ -64,7 +64,7 @@ class DownloadMainFilesWorker(BaseObjectsJobWorker):
     """Worker for downloading main files from Commons to local filesystem."""
 
     def __init__(self, data: JobsRunner) -> None:
-        self.output_dir = Path(settings.paths.main_files_path)
+        self.output_dir = Path(app_settings.paths.main_files_path)
         super().__init__(data)
         self.args = data.args or {}
 
@@ -139,7 +139,7 @@ class DownloadMainFilesWorker(BaseObjectsJobWorker):
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         # Create a services session for all downloads
-        self.session = create_commons_session(settings.other.user_agent)
+        self.session = create_commons_session(app_settings.other.user_agent)
 
         per_item = self.get_priority(len(templates_with_files))
 

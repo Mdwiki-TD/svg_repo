@@ -27,7 +27,7 @@ def get_settings() -> Settings:
 
 
 # Singleton settings instance
-settings = get_settings()
+app_settings = get_settings()
 
 
 def ensure_directories() -> None:
@@ -35,11 +35,11 @@ def ensure_directories() -> None:
 
     Call this once at app startup (in the factory), not at import time.
     """
-    for dir_name in settings.paths.all_paths():
+    for dir_name in app_settings.paths.all_paths():
         Path(dir_name).mkdir(parents=True, exist_ok=True)
 
 
 __all__ = [
     "ensure_directories",
-    "settings",
+    "app_settings",
 ]

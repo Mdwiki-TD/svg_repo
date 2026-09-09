@@ -12,7 +12,7 @@ from pathlib import Path
 from mwclient.client import Site
 
 from ....api_services.files_service import DownloadAndSaveData, FilesService
-from ....config import settings
+from ....config import app_settings
 from ....services.copysvg_wrapper import (
     ExtractResult,
     extract_from_path,
@@ -65,7 +65,7 @@ class ExtractFilesTranslationsWorker(BaseObjectsJobWorker):
         name = Path(title).name
         slug = re.sub(r"[^A-Za-z0-9._\- ]+", "_", str(name)).strip("._") or "untitled"
         slug = slug.replace(" ", "_").lower()
-        out = Path(settings.paths.svg_data) / slug
+        out = Path(app_settings.paths.svg_data) / slug
         out.mkdir(parents=True, exist_ok=True)
 
         out_dir_main = out / "files"
