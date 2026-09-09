@@ -518,7 +518,9 @@ class TestRunner:
         # Exact count depends on when cancellation is detected
         assert len(result_dict["pages_updated"]) == 2  # Should process 2 templates before cancellation
 
-    def test_collect_templates_data_progress_saving_frequency(self, monkeypatch: pytest.MonkeyPatch):
+    def test_collect_templates_data_progress_saving_frequency(
+        self, monkeypatch: pytest.MonkeyPatch, mock_find_last_world, mock_find_source
+    ):
         """Test that progress is saved every 10 templates."""
         # Create 25 templates to process
         templates = [
@@ -538,6 +540,11 @@ class TestRunner:
             return original_save(*args, **kwargs)
 
         self.services["save_job_result_by_name"].side_effect = track_save
+
+        monkeypatch.setattr(
+            "src.main_app.jobs_workers.admin_jobs_workers.collect_templates_data.worker.OneFileProcessor._load_slug",
+            MagicMock(return_value="test"),
+        )
 
         self.collect_runner(job_id=1, user={})
 

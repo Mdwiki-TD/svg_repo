@@ -61,16 +61,16 @@ def mock_steps(monkeypatch: pytest.MonkeyPatch) -> MockSteps:
     )
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def mock_copylangs_services(monkeypatch: pytest.MonkeyPatch) -> MockServices:
 
-    mock_check_cancel_db_periodic = MagicMock()
+    mock_check_cancel_db_periodic = MagicMock(return_value=False)
     monkeypatch.setattr(
         "src.main_app.jobs_workers.public_jobs_workers.copy_svg_langs.worker.CopySvgLangsWorker.check_cancel_db_periodic",
         mock_check_cancel_db_periodic,
     )
 
-    mock_is_cancelled = MagicMock()
+    mock_is_cancelled = MagicMock(return_value=False)
     monkeypatch.setattr(
         "src.main_app.jobs_workers.public_jobs_workers.copy_svg_langs.worker.CopySvgLangsWorker.is_cancelled",
         mock_is_cancelled,
