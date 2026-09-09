@@ -13,7 +13,7 @@ import pytest
 from flask import Flask
 from flask.testing import FlaskClient
 
-from src.main_app.config import settings
+from src.main_app.config import app_settings
 from src.main_app.database.services import UsersService, UserTokenService
 from src.main_app.public.auth.routes import OAuthCallbackView  # noqa: F401
 from src.main_app.services.core.cookies import sign_state_token
@@ -50,10 +50,10 @@ class TestLogin:
         assert response.headers["Location"] == "https://auth.example"
 
         with mock_client.session_transaction() as sess:
-            # Real session key from settings (oauth_state_nonce)
-            assert sess[settings.sessions.state_key] == "nonce"
-            # Real session key from settings (state = request_token_key)
-            assert sess[settings.sessions.request_token_key] == "a"
+            # Real session key from app_settings (oauth_state_nonce)
+            assert sess[app_settings.sessions.state_key] == "nonce"
+            # Real session key from app_settings (state = request_token_key)
+            assert sess[app_settings.sessions.request_token_key] == "a"
 
     def test_login_rate_limited(
         self, mock_app: Flask, mock_client: FlaskClient, monkeypatch: pytest.MonkeyPatch
@@ -111,16 +111,16 @@ class TestCallback:
 
         # Seed session with state nonce + request token (real session keys)
         with mock_client.session_transaction() as sess:
-            sess[settings.sessions.state_key] = state_nonce
-            sess[settings.sessions.request_token_key] = "k"
-            sess[settings.sessions.request_secret_key] = "s"
+            sess[app_settings.sessions.state_key] = state_nonce
+            sess[app_settings.sessions.request_token_key] = "k"
+            sess[app_settings.sessions.request_secret_key] = "s"
 
         # The state query param must be the signed token (MediaWiki echoes it back)
         response = mock_client.get(f"/callback?state={quote(signed_state)}&oauth_verifier=code")
         cookie_header = response.headers.get("Set-Cookie", "")
 
         assert response.status_code == 302
-        # Real cookie name from settings
+        # Real cookie name from app_settings
         # assert "uid_enc" in cookie_header
 
         # Verify user was persisted to the real DB
