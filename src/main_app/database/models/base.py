@@ -5,6 +5,8 @@ These are NOT standalone bases — they are mixed into models
 that inherit from db.Model (the Flask-SQLAlchemy declarative base).
 """
 
+from __future__ import annotations
+
 from datetime import datetime
 
 from sqlalchemy import DateTime, func

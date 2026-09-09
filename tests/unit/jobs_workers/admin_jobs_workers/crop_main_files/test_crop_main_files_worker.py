@@ -113,7 +113,7 @@ def mock_crop_services(monkeypatch: pytest.MonkeyPatch, tmp_path, mock_base_work
     #     mocks["generate_cropped_filename"],
     # )
     monkeypatch.setattr(
-        "src.main_app.jobs_workers.admin_jobs_workers.crop_main_files.files_processor.settings",
+        "src.main_app.jobs_workers.admin_jobs_workers.crop_main_files.files_processor.app_settings",
         mocks["settings"],
     )
 

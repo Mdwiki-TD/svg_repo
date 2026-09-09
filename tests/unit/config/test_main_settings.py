@@ -131,14 +131,14 @@ def test_get_settings(tmp_path):
             "MAIN_DIR": str(tmp_path / "test-data"),
         },
     ):
-        settings = get_settings()
+        _settings = get_settings()
 
-        assert isinstance(settings, Settings)
-        assert settings.security.secret_key == "test-secret-key"
-        assert settings.cookie.name == "test-cookie"
-        assert settings.cookie.max_age == 7200
-        assert settings.sessions.state_key == "test-state"
-        assert settings.sessions.request_token_key == "test-request"
+        assert isinstance(_settings, Settings)
+        assert _settings.security.secret_key == "test-secret-key"
+        assert _settings.cookie.name == "test-cookie"
+        assert _settings.cookie.max_age == 7200
+        assert _settings.sessions.state_key == "test-state"
+        assert _settings.sessions.request_token_key == "test-request"
 
     # Clean up cache
     get_settings.cache_clear()

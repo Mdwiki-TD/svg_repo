@@ -9,14 +9,14 @@ from pathlib import Path
 
 from flask import Blueprint, flash, render_template, request
 
-from ...config import settings
+from ...config import app_settings
 from ..decorators import admin_required
 
 logger = logging.getLogger(__name__)
 
 
 def get_log_dir() -> Path:
-    return Path(settings.paths.log_dir)
+    return Path(app_settings.paths.log_dir)
 
 
 class CheckErrorsRoutes:

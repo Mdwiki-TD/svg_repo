@@ -19,7 +19,7 @@ from flask import (
 )
 
 from ...api_services import FilesService, UploadService, get_user_site
-from ...config import settings
+from ...config import app_settings
 from ...public.auth import oauth_required
 from ...services.copysvg_wrapper import InjectResult, extract_from_path, inject_step_one_file
 from ...services.copysvg_wrapper.mapping import TranslationMapping
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 def get_session_dir(session_id: str) -> Path:
     """Get the path to a session's directory and ensure it exists."""
     safe_session_id = "".join(c for c in session_id if c.isalnum())
-    session_dir = Path(settings.paths.main_files_path) / "translate_sessions" / safe_session_id
+    session_dir = Path(app_settings.paths.main_files_path) / "translate_sessions" / safe_session_id
     session_dir.mkdir(parents=True, exist_ok=True)
     return session_dir
 

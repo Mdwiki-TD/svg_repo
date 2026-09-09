@@ -11,7 +11,7 @@ from typing import Any
 from mwclient.client import Site
 
 from ....api_services import MwClientPage, create_commons_session
-from ....config import settings
+from ....config import app_settings
 from ....database.models import TemplateRecord
 from ....database.services import OwidChartsService
 from ....database.templates_utils import extract_slug
@@ -39,9 +39,9 @@ class OneFileProcessor:
         self.site = site
         self.exists: dict[str, Any] = {}
         self.args = args
-        self.original_dir = Path(settings.paths.crop_main_files_path) / "original"
-        self.cropped_dir = Path(settings.paths.crop_main_files_path) / "cropped"
-        self.session = create_commons_session(settings.other.user_agent)
+        self.original_dir = Path(app_settings.paths.crop_main_files_path) / "original"
+        self.cropped_dir = Path(app_settings.paths.crop_main_files_path) / "cropped"
+        self.session = create_commons_session(app_settings.other.user_agent)
 
         self.owid_charts_service = OwidChartsService()
 

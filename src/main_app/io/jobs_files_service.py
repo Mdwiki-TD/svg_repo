@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from ..config import settings
+from ..config import app_settings
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 def get_jobs_data_dir() -> Path:
     """Get the directory for storing job data files."""
     # Use jobs_path from settings paths
-    jobs_dir = getattr(settings.paths, "jobs_path", None)
+    jobs_dir = getattr(app_settings.paths, "jobs_path", None)
     if not jobs_dir:
         raise RuntimeError("jobs_path configuration is required for job result storage")
     jobs_dir = Path(jobs_dir)

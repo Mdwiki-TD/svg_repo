@@ -11,7 +11,7 @@ class UniqueError(DatabaseError):
     code = "gkpj-unique"
     message = "Unique constraint failed"
 
-    def __init__(self, title) -> None:
+    def __init__(self, title: str) -> None:
         self.title = title
         super().__init__(f"Unique constraint failed for title: {title}", None, None)  # type: ignore
 

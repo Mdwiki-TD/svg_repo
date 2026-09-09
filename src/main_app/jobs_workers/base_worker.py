@@ -12,7 +12,7 @@ from mwclient.client import Site
 from sqlalchemy.orm.exc import StaleDataError
 
 from ..api_services import get_user_site
-from ..config import settings
+from ..config import app_settings
 from ..database.services import JobsService
 from ..io import is_job_cancelled_file_exist, save_job_result_by_name
 from .objects import JobsRunner
@@ -197,8 +197,8 @@ class BaseObjectsJobWorker(ABC):
         if length < 11:
             return 1
 
-        if settings.jobs.priority_per_item is not None:
-            return settings.jobs.priority_per_item
+        if app_settings.jobs.priority_per_item is not None:
+            return app_settings.jobs.priority_per_item
 
         # Calculate the interval for progress updates to aim for about 10 updates.
         return min(10, length // 10)

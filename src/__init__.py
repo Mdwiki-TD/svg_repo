@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .main_app import logger_config
 
 __all__ = [

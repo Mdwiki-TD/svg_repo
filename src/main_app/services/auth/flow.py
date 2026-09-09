@@ -18,7 +18,7 @@ from flask import g, make_response, redirect, session, url_for
 from mwoauth import AccessToken
 from werkzeug.wrappers import Response as WerkzeugResponse
 
-from ...config import settings
+from ...config import app_settings
 from ...database.services import UsersService
 from ..core.cookies import (
     extract_user_id,
@@ -32,9 +32,9 @@ from .token_manager import TokenManager
 
 logger = logging.getLogger(__name__)
 
-request_secret_key = settings.sessions.request_secret_key
-request_token_key = settings.sessions.request_token_key
-oauth_state_nonce = settings.sessions.state_key
+request_secret_key = app_settings.sessions.request_secret_key
+request_token_key = app_settings.sessions.request_token_key
+oauth_state_nonce = app_settings.sessions.state_key
 
 
 @dataclass(frozen=True)
@@ -71,10 +71,10 @@ class AuthFlowService:
 
     def __init__(self) -> None:
         self.oauth_service = OAuthService(
-            consumer_key=settings.oauth.consumer_key,
-            consumer_secret=settings.oauth.consumer_secret,
-            oauth_mwuri=settings.oauth.mw_uri,
-            user_agent=settings.other.user_agent,
+            consumer_key=app_settings.oauth.consumer_key,
+            consumer_secret=app_settings.oauth.consumer_secret,
+            oauth_mwuri=app_settings.oauth.mw_uri,
+            user_agent=app_settings.other.user_agent,
         )
         self.token_manager = TokenManager()
         self.user_svc = UsersService()
@@ -138,7 +138,7 @@ class AuthFlowService:
         persist credentials, set session + cookie.
         """
         # 1. State verification
-        state_error = self._verify_oauth_state(request_args.get(settings.sessions.request_token_key))
+        state_error = self._verify_oauth_state(request_args.get(app_settings.sessions.request_token_key))
         if state_error:
             return state_error
 
@@ -279,12 +279,12 @@ class AuthFlowService:
     @staticmethod
     def _set_auth_cookie(user_id: int, response: WerkzeugResponse) -> None:
         response.set_cookie(
-            settings.cookie.name,
+            app_settings.cookie.name,
             sign_user_id(user_id),
-            httponly=settings.cookie.httponly,
-            secure=settings.cookie.secure,
-            samesite=settings.cookie.samesite,
-            max_age=settings.cookie.max_age,
+            httponly=app_settings.cookie.httponly,
+            secure=app_settings.cookie.secure,
+            samesite=app_settings.cookie.samesite,
+            max_age=app_settings.cookie.max_age,
             path="/",
         )
 
@@ -329,7 +329,7 @@ class AuthFlowService:
                 flash_category = "danger"
 
         response = make_response(redirect(index_url))
-        response.delete_cookie(settings.cookie.name, path="/")
+        response.delete_cookie(app_settings.cookie.name, path="/")
         g._current_user = None
 
         return LogoutResult(

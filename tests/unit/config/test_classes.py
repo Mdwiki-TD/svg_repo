@@ -119,7 +119,7 @@ def test_settings():
         tool_title="tool_title",
     )
 
-    settings = Settings(
+    app_settings = Settings(
         database_data=db_config,
         cookie=cookie_config,
         sessions=sessions,
@@ -130,10 +130,10 @@ def test_settings():
         other=other_config,
     )
 
-    assert settings.other.wiki_domain == "upload.example.com"
-    assert settings.database_data.db_host == "localhost"
-    assert settings.database_data.db_name == "test"
-    assert settings.cookie.name == "test"
-    assert settings.paths.svg_data == "/svg"
-    assert settings.security.max_content_length == 100 * 1024 * 1024
-    assert settings.other.csrf_time_limit == 3600
+    assert app_settings.other.wiki_domain == "upload.example.com"
+    assert app_settings.database_data.db_host == "localhost"
+    assert app_settings.database_data.db_name == "test"
+    assert app_settings.cookie.name == "test"
+    assert app_settings.paths.svg_data == "/svg"
+    assert app_settings.security.max_content_length == 100 * 1024 * 1024
+    assert app_settings.other.csrf_time_limit == 3600

@@ -17,7 +17,7 @@ from flask.typing import ResponseReturnValue
 from flask.wrappers import Response
 
 from ..admin.decorators import admin_required
-from ..config import settings
+from ..config import app_settings
 from ..jobs_workers.admin_jobs_workers.download_main_files.zip_utils import create_main_files_zip
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,7 @@ class UtilsJobsBp:
         """
         Serve a downloaded main file from the main_files_path directory.
         """
-        response = send_from_directory(settings.paths.main_files_path, filename)
+        response = send_from_directory(app_settings.paths.main_files_path, filename)
         response.headers["Content-Security-Policy"] = "script-src 'none'; object-src 'none'"
         response.headers["X-Content-Type-Options"] = "nosniff"
         return response
@@ -67,7 +67,7 @@ class UtilsJobsBp:
         Serve an original file from the crop_main_files_path/original directory.
         """
         filename = filename.removeprefix("File:")
-        response = send_from_directory(Path(settings.paths.crop_main_files_path) / "original", filename)
+        response = send_from_directory(Path(app_settings.paths.crop_main_files_path) / "original", filename)
         response.headers["Content-Security-Policy"] = "script-src 'none'; object-src 'none'"
         response.headers["X-Content-Type-Options"] = "nosniff"
         return response
@@ -77,7 +77,7 @@ class UtilsJobsBp:
         Serve a cropped file from the crop_main_files_path/cropped directory.
         """
         filename = filename.removeprefix("File:")
-        response = send_from_directory(Path(settings.paths.crop_main_files_path) / "cropped", filename)
+        response = send_from_directory(Path(app_settings.paths.crop_main_files_path) / "cropped", filename)
         response.headers["Content-Security-Policy"] = "script-src 'none'; object-src 'none'"
         response.headers["X-Content-Type-Options"] = "nosniff"
         return response

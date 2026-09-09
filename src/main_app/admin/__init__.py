@@ -1,5 +1,7 @@
 """Admin blueprint package."""
 
+from __future__ import annotations
+
 from flask import Blueprint, Flask
 
 from .admin_panel import AdminPanel

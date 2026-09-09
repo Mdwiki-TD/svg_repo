@@ -80,7 +80,7 @@ def test_get_jobs_data_dir_not_configured(monkeypatch: pytest.MonkeyPatch):
 
     mock_settings = SimpleNamespace(paths=SimpleNamespace())
 
-    monkeypatch.setattr("src.main_app.io.jobs_files_service.settings", mock_settings)
+    monkeypatch.setattr("src.main_app.io.jobs_files_service.app_settings", mock_settings)
     get_jobs_data_dir.cache_clear()
 
     with pytest.raises(RuntimeError, match="jobs_path configuration is required for job result storage"):
@@ -97,7 +97,7 @@ def test_get_jobs_data_dir_creates_directory(tmp_path, monkeypatch: pytest.Monke
     assert not jobs_dir.exists()
 
     mock_settings = SimpleNamespace(paths=SimpleNamespace(jobs_path=str(jobs_dir)))
-    monkeypatch.setattr("src.main_app.io.jobs_files_service.settings", mock_settings)
+    monkeypatch.setattr("src.main_app.io.jobs_files_service.app_settings", mock_settings)
     get_jobs_data_dir.cache_clear()
 
     result = get_jobs_data_dir()

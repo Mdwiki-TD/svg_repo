@@ -17,7 +17,7 @@ def mock_settings(monkeypatch: pytest.MonkeyPatch) -> None:
     fake_settings = SimpleNamespace(
         cookie=SimpleNamespace(name="auth_cookie"),
     )
-    monkeypatch.setattr("src.main_app.services.auth.utils.settings", fake_settings)
+    monkeypatch.setattr("src.main_app.services.auth.utils.app_settings", fake_settings)
 
 
 class TestLoadUser:

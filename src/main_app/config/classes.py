@@ -9,6 +9,7 @@ from typing import Any
 
 # --- Helper Functions ---
 
+
 def _env_bool(name: str, default: bool = False) -> bool:
     """Convert environment variable to boolean."""
     value = os.getenv(name)
@@ -212,6 +213,7 @@ class Paths:
             self.fix_nested_data,
             self.crop_main_files_path,
         ]
+
 
 @dataclass(frozen=True)
 class CookieConfig:

@@ -32,7 +32,7 @@ class TestBuildSession:
         mock_settings = MagicMock()
         mock_settings.other.user_agent = user_agent
         monkeypatch.setattr(
-            "src.main_app.api_services.clients.owid_client.settings",
+            "src.main_app.api_services.clients.owid_client.app_settings",
             mock_settings,
         )
 

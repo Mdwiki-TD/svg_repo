@@ -1,5 +1,7 @@
 """Auth sub-package — OAuth, token management, and login flow."""
 
+from __future__ import annotations
+
 from .auth_exceptions import OAuthCallbackError, OAuthIdentityError
 from .auth_service import OAuthService
 from .current_user import CurrentUser
