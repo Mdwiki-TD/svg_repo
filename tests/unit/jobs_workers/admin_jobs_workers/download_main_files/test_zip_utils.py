@@ -16,7 +16,7 @@ from src.main_app.jobs_workers.admin_jobs_workers.download_main_files.zip_utils 
 def mock_settings(monkeypatch: pytest.MonkeyPatch) -> MagicMock:
     _mock = MagicMock()
     monkeypatch.setattr(
-        "src.main_app.jobs_workers.admin_jobs_workers.download_main_files.zip_utils.settings",
+        "src.main_app.jobs_workers.admin_jobs_workers.download_main_files.zip_utils.app_settings",
         _mock,
     )
     return _mock

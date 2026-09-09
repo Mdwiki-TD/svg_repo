@@ -19,14 +19,14 @@ from src.main_app.io.jobs_files_service import (
 
 @pytest.fixture
 def mock_settings(tmp_path):
-    with patch("src.main_app.io.jobs_files_service.settings") as m_settings:
+    with patch("src.main_app.io.jobs_files_service.app_settings") as m_settings:
         m_settings.paths.jobs_path = str(tmp_path / "jobs")
         get_jobs_data_dir.cache_clear()
         yield m_settings
 
 
 def test_get_jobs_data_dir_no_path():
-    with patch("src.main_app.io.jobs_files_service.settings") as m_settings:
+    with patch("src.main_app.io.jobs_files_service.app_settings") as m_settings:
         m_settings.paths.jobs_path = None
         get_jobs_data_dir.cache_clear()
         with pytest.raises(RuntimeError, match="jobs_path configuration is required"):
